@@ -1,0 +1,65 @@
+PROCEDURE Cuil(stDocumento is string, sTSexo is string)
+stDocumento = Replace(stDocumento, " ", "")
+stDocumento = Replace(stDocumento, "-", "")
+
+nro1 is int
+nro2 is int
+nro3 is int
+nro4 is int
+nro5 is int
+nro6 is int
+nro7 is int
+nro8 is int
+nro9 is int
+nro10 is int
+nro11 is int
+resultado is numeric
+resto is numeric
+decimal is int
+IF sTSexo = "F" THEN
+	stDocumento= "27" + stDocumento
+ELSE
+	stDocumento= "20" + stDocumento
+END
+IF Length(stDocumento) = 10 OR Length(stDocumento) = 9 THEN
+	nro1 = Val(stDocumento[[1 TO 1]])*5
+	nro2 = Val(stDocumento[[2 TO 2]])*4
+	nro3 = Val(stDocumento[[3 TO 3]])*3
+	nro4 = Val(stDocumento[[4 TO 4]])*2
+	nro5 = Val(stDocumento[[5 TO 5]])*7
+	nro6 = Val(stDocumento[[6 TO 6]])*6
+	nro7 = Val(stDocumento[[7 TO 7]])*5
+	nro8 = Val(stDocumento[[8 TO 8]])*4
+	nro9 = Val(stDocumento[[9 TO 9]])*3
+	nro10 = Val(stDocumento[[10 TO 10]])*2
+	nro11 = Val(stDocumento[[11 TO 11]])
+	resultado = nro1 + nro2 + nro3 + nro4 + nro5 + nro6 + nro7 + nro8 + nro9 + nro10
+	resultado = resultado/11
+	decimal = resultado
+	resto = (resultado-decimal)
+	decimal = (resultado-decimal)*10
+	
+	IF resto > 0.01 THEN
+		decimal = decimal +1
+	END
+	
+	IF decimal <= 1 THEN
+		IF decimal = 0 THEN
+			decimal = 0
+		ELSE
+			IF sTSexo = "M" THEN
+				decimal = 9
+			ELSE
+				decimal = 4
+			END
+			stDocumento = "23" + stDocumento[[3 TO 10]]
+		END
+		
+	ELSE
+		decimal = 11 - decimal
+	END
+	stDocumento = stDocumento + decimal
+ELSE
+	stDocumento=""
+END
+RESULT stDocumento
